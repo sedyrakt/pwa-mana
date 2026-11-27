@@ -1,0 +1,167 @@
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#4F46E5" />
+
+    <meta
+      name="description"
+      content="MANA - Application nutritionnelle"
+    />
+
+    <meta
+      name="mobile-web-app-capable"
+      content="yes"
+    />
+
+    <meta
+      name="apple-mobile-web-app-capable"
+      content="yes"
+    />
+
+    <meta
+      name="apple-mobile-web-app-title"
+      content="MANA"
+    />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="default"
+    />
+
+    <link
+      rel="manifest"
+      href="/pwa-mana/manifest.json"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/pwa-mana/pwa-192.png"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/pwa-mana/apple-touch-icon.png"
+    />
+
+    <meta
+      name="application-name"
+      content="MANA"
+    />
+
+    <title>MANA</title>
+
+    <style id="expo-reset">
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        background: #FFFFFF;
+      }
+
+      body {
+        overflow: hidden;
+        overscroll-behavior: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      #root {
+        display: flex;
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+
+    <!-- MANA PWA SERVICE WORKER -->
+    <script>
+      (() => {
+        const BASE_PATH = "/pwa-mana/";
+
+        const isProduction =
+          window.location.hostname === "sedyrakt.github.io" &&
+          (
+            window.location.pathname === "/pwa-mana" ||
+            window.location.pathname.startsWith(BASE_PATH)
+          );
+
+        // Tsy mampandeha Service Worker amin'ny localhost
+        // na amin'ny Development Mode Expo.
+        if (
+          !isProduction ||
+          !("serviceWorker" in navigator) ||
+          !window.isSecureContext
+        ) {
+          console.log(
+            "MANA: Service Worker disabled in development mode."
+          );
+          return;
+        }
+
+        window.addEventListener("load", async () => {
+          try {
+            const registration =
+              await navigator.serviceWorker.register(
+                BASE_PATH + "sw.js",
+                {
+                  scope: BASE_PATH,
+                  updateViaCache: "none"
+                }
+              );
+
+            console.log(
+              "MANA PWA Service Worker registered:",
+              registration.scope
+            );
+
+            // Mitady version vaovao.
+            await registration.update();
+
+          } catch (error) {
+            console.error(
+              "MANA PWA Service Worker registration failed:",
+              error
+            );
+          }
+        });
+      })();
+    </script>
+  <meta name="theme-color" content="#4F46E5">
+<meta name="description" content="MANA - Application nutritionnelle">
+<link rel="icon" href="/pwa-mana/favicon.ico"/></head>
+
+  <body>
+    <noscript>
+      You need to enable JavaScript to run MANA.
+    </noscript>
+
+    <div id="root"></div>
+  <script src="/pwa-mana/_expo/static/js/web/index-f5520ce6801d4f21615fe864a3f2837c.js" defer></script>
+</body>
+</html>
